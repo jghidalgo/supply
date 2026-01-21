@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Complete Dental Supplies | Disposable Order Form</title>
+  <style>
+    :root {
+      --green: #34a853;
+      --dark-green: #2c8a46;
+      --orange: #f39b1d;
+      --light-orange: #f7b35a;
+      --dark: #2f2f2f;
+      --gray: #6b7280;
+      --bg: #f8fafc;
+      --white: #ffffff;
+      --border: #e5e7eb;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: "Helvetica Neue", Arial, sans-serif;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--dark);
+    }
+
+    header {
+      background: var(--white);
+      border-bottom: 1px solid var(--border);
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+
+    .top-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 18px 6vw;
+      gap: 16px;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+    }
+
+    .logo svg {
+      width: 48px;
+      height: 48px;
+    }
+
+    .logo-text {
+      display: flex;
+      flex-direction: column;
+      line-height: 1.1;
+    }
+
+    .logo-text span:first-child {
+      color: var(--green);
+      font-size: 20px;
+    }
+
+    .logo-text span:last-child {
+      color: var(--dark);
+      font-size: 14px;
+      letter-spacing: 4px;
+    }
+
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      color: var(--gray);
+      font-size: 14px;
+    }
+
+    .cta-button {
+      background: var(--orange);
+      color: var(--white);
+      border: none;
+      padding: 10px 18px;
+      border-radius: 6px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.2s ease;
+    }
+
+    .cta-button:hover {
+      background: var(--dark-green);
+    }
+
+    .hero {
+      background: linear-gradient(120deg, var(--light-orange), #f6a02a 55%, var(--orange));
+      color: var(--white);
+      padding: 48px 6vw 40px;
+    }
+
+    .hero h1 {
+      font-size: clamp(26px, 4vw, 40px);
+      margin-bottom: 12px;
+    }
+
+    .hero p {
+      max-width: 720px;
+      font-size: 16px;
+      line-height: 1.6;
+    }
+
+    main {
+      padding: 36px 6vw 60px;
+      display: grid;
+      grid-template-columns: minmax(0, 2.4fr) minmax(0, 1fr);
+      gap: 28px;
+    }
+
+    .section-title {
+      font-size: 20px;
+      margin-bottom: 16px;
+      color: var(--dark);
+    }
+
+    .product-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 18px;
+    }
+
+    .product-card {
+      background: var(--white);
+      border-radius: 10px;
+      padding: 16px;
+      border: 1px solid var(--border);
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      min-height: 180px;
+    }
+
+    .product-card h3 {
+      font-size: 15px;
+      line-height: 1.3;
+    }
+
+    .product-meta {
+      color: var(--gray);
+      font-size: 13px;
+    }
+
+    .qty-control {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: auto;
+    }
+
+    .qty-control input {
+      width: 72px;
+      padding: 8px 10px;
+      border-radius: 6px;
+      border: 1px solid var(--border);
+      text-align: center;
+      font-weight: 600;
+    }
+
+    .order-panel {
+      background: var(--white);
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      padding: 20px;
+      position: sticky;
+      top: 110px;
+      height: fit-content;
+    }
+
+    .order-panel h2 {
+      margin-bottom: 12px;
+      font-size: 18px;
+    }
+
+    .order-panel label {
+      display: block;
+      font-size: 13px;
+      color: var(--gray);
+      margin-top: 12px;
+      margin-bottom: 6px;
+    }
+
+    .order-panel input,
+    .order-panel textarea {
+      width: 100%;
+      padding: 10px 12px;
+      border-radius: 6px;
+      border: 1px solid var(--border);
+    }
+
+    .order-panel textarea {
+      min-height: 90px;
+      resize: vertical;
+    }
+
+    .summary {
+      margin: 18px 0;
+      padding-top: 12px;
+      border-top: 1px dashed var(--border);
+      font-size: 14px;
+      color: var(--gray);
+      line-height: 1.5;
+    }
+
+    .summary strong {
+      color: var(--dark);
+    }
+
+    .note {
+      font-size: 12px;
+      color: var(--gray);
+      margin-top: 12px;
+    }
+
+    footer {
+      padding: 18px 6vw 36px;
+      font-size: 12px;
+      color: var(--gray);
+    }
+
+    @media (max-width: 960px) {
+      main {
+        grid-template-columns: 1fr;
+      }
+
+      .order-panel {
+        position: static;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="top-bar">
+      <div class="logo" aria-label="Complete Dental Supplies">
+        <svg viewBox="0 0 64 64" role="img" aria-hidden="true">
+          <defs>
+            <linearGradient id="leaf" x1="0" x2="1" y1="0" y2="1">
+              <stop offset="0" stop-color="#f7b35a" />
+              <stop offset="1" stop-color="#f39b1d" />
+            </linearGradient>
+          </defs>
+          <path d="M20 52C6 40 10 20 32 12c10 10 14 28-12 40z" fill="url(#leaf)" />
+          <path d="M30 54c-6-14-1-32 14-40 9 8 10 26-14 40z" fill="#34a853" />
+          <circle cx="18" cy="20" r="10" fill="#6b7280" opacity="0.7" />
+        </svg>
+        <div class="logo-text">
+          <span>COMPLETE DENTAL</span>
+          <span>SUPPLIES</span>
+        </div>
+      </div>
+      <div class="header-actions">
+        <span>Need help? (305) 000-0000</span>
+        <button class="cta-button" type="button" onclick="document.getElementById('order-panel').scrollIntoView({behavior:'smooth'});">Quick Order</button>
+      </div>
+    </div>
+  </header>
+
+  <section class="hero">
+    <h1>Disposable Supply Order Form</h1>
+    <p>
+      Thanks for scanning the QR code! Select the quantities you need below. When you click
+      “Send Order,” your order details will be emailed to Complete Dental Supplies for fast
+      processing.
+    </p>
+  </section>
+
+  <main>
+    <section>
+      <h2 class="section-title">Disposables Collection</h2>
+      <div class="product-grid" id="product-grid"></div>
+    </section>
+
+    <aside class="order-panel" id="order-panel">
+      <h2>Your Order Details</h2>
+      <label for="clinic-name">Clinic / Office Name</label>
+      <input id="clinic-name" name="clinic-name" type="text" placeholder="Bright Smile Dental" />
+
+      <label for="contact-name">Contact Name</label>
+      <input id="contact-name" name="contact-name" type="text" placeholder="Dr. Maria Perez" />
+
+      <label for="contact-email">Email</label>
+      <input id="contact-email" name="contact-email" type="email" placeholder="orders@clinic.com" />
+
+      <label for="contact-phone">Phone</label>
+      <input id="contact-phone" name="contact-phone" type="tel" placeholder="(305) 555-1234" />
+
+      <label for="delivery-notes">Delivery / Special Notes</label>
+      <textarea id="delivery-notes" name="delivery-notes" placeholder="Delivery hours, substitutions, etc."></textarea>
+
+      <div class="summary" id="order-summary">
+        <strong>Order Summary</strong><br />
+        Add quantities to see your summary.
+      </div>
+
+      <button class="cta-button" type="button" id="send-order">Send Order Email</button>
+      <p class="note">This will open your email client with the order details ready to send.</p>
+    </aside>
+  </main>
+
+  <footer>
+    Complete Dental Supplies · Disposable Order Form · QR quick order experience
+  </footer>
+
+  <script>
+    const products = [
+      { name: "Aurelia Vibrant Latex Exam Gloves", detail: "Box of 100" },
+      { name: "Nitrile Exam Gloves (Powder-Free)", detail: "Box of 100" },
+      { name: "Saliva Ejectors Premium 148mm", detail: "Bag of 100" },
+      { name: "Tray Sleeves 10-1/2 x 14", detail: "500 pcs / box" },
+      { name: "Vented Oral Evacuation Tips 6-1/2", detail: "Bag of 50" },
+      { name: "Patient Bibs with Poly Backing", detail: "Box of 500" },
+      { name: "Dental Cotton Rolls #2", detail: "Box of 2000" },
+      { name: "2 x 2 Non-Woven Gauze", detail: "200 pcs / pack" },
+      { name: "Blue Surgical Masks", detail: "Box of 50" },
+      { name: "Isolation Gowns", detail: "Case of 50" },
+      { name: "Face Shields", detail: "Pack of 10" },
+      { name: "Micro Applicators", detail: "Pack of 100" },
+      { name: "Barrier Film 4 x 6", detail: "1200 sheets" },
+      { name: "Prophy Angles", detail: "Box of 100" },
+      { name: "Disposable Mirror Heads", detail: "Box of 50" },
+      { name: "Cotton Tip Applicators", detail: "Box of 1000" },
+      { name: "HVE Suction Tips", detail: "Bag of 25" },
+      { name: "Disposable Syringe Tips", detail: "Bag of 100" },
+      { name: "Saliva Ejector Tips", detail: "Bag of 100" },
+      { name: "Plastic Impression Trays", detail: "Assorted pack" },
+      { name: "Sterilization Pouches", detail: "Box of 200" },
+      { name: "Headrest Covers", detail: "Pack of 250" },
+      { name: "Disposable Dental Towels", detail: "Pack of 100" },
+      { name: "Barrier Sleeves for Handpieces", detail: "Box of 500" }
+    ];
+
+    const productGrid = document.getElementById("product-grid");
+    const summaryEl = document.getElementById("order-summary");
+
+    const quantities = new Map();
+
+    const updateSummary = () => {
+      const selected = [...quantities.entries()].filter(([_, qty]) => qty > 0);
+      if (!selected.length) {
+        summaryEl.innerHTML = "<strong>Order Summary</strong><br />Add quantities to see your summary.";
+        return;
+      }
+      const lines = selected
+        .map(([name, qty]) => `${qty} × ${name}`)
+        .join("<br />");
+      summaryEl.innerHTML = `<strong>Order Summary</strong><br />${lines}`;
+    };
+
+    products.forEach((product) => {
+      const card = document.createElement("div");
+      card.className = "product-card";
+      card.innerHTML = `
+        <h3>${product.name}</h3>
+        <div class="product-meta">${product.detail}</div>
+        <div class="qty-control">
+          <label for="qty-${product.name}" class="product-meta">Qty</label>
+          <input id="qty-${product.name}" type="number" min="0" value="0" />
+        </div>
+      `;
+      const input = card.querySelector("input");
+      input.addEventListener("input", (event) => {
+        const value = Math.max(0, Number(event.target.value || 0));
+        quantities.set(product.name, value);
+        updateSummary();
+      });
+      productGrid.appendChild(card);
+    });
+
+    document.getElementById("send-order").addEventListener("click", () => {
+      const selected = [...quantities.entries()].filter(([_, qty]) => qty > 0);
+      if (!selected.length) {
+        alert("Please add at least one product quantity before sending your order.");
+        return;
+      }
+
+      const clinic = document.getElementById("clinic-name").value.trim();
+      const contact = document.getElementById("contact-name").value.trim();
+      const email = document.getElementById("contact-email").value.trim();
+      const phone = document.getElementById("contact-phone").value.trim();
+      const notes = document.getElementById("delivery-notes").value.trim();
+
+      const lines = [
+        "New QR Order Request",
+        "",
+        `Clinic: ${clinic || ""}`,
+        `Contact: ${contact || ""}`,
+        `Email: ${email || ""}`,
+        `Phone: ${phone || ""}`,
+        "",
+        "Order Items:",
+        ...selected.map(([name, qty]) => `- ${qty} x ${name}`),
+        "",
+        `Notes: ${notes || ""}`
+      ];
+
+      const body = encodeURIComponent(lines.join("\n"));
+      const subject = encodeURIComponent("Disposable Order Request");
+      window.location.href = `mailto:orders@completedentalsupplies.com?subject=${subject}&body=${body}`;
+    });
+  </script>
+</body>
+</html>
