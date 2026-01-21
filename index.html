@@ -83,6 +83,26 @@
       font-size: 14px;
     }
 
+    .main-nav {
+      display: flex;
+      gap: 24px;
+      padding: 10px 6vw 14px;
+      border-top: 1px solid var(--border);
+      color: var(--gray);
+      font-size: 14px;
+      flex-wrap: wrap;
+    }
+
+    .main-nav a {
+      color: inherit;
+      text-decoration: none;
+      font-weight: 600;
+    }
+
+    .main-nav a:hover {
+      color: var(--green);
+    }
+
     .cta-button {
       background: var(--orange);
       color: var(--white);
@@ -96,6 +116,16 @@
 
     .cta-button:hover {
       background: var(--dark-green);
+    }
+
+    .secondary-button {
+      background: transparent;
+      color: var(--dark);
+      border: 1px solid var(--border);
+      padding: 8px 14px;
+      border-radius: 6px;
+      font-weight: 600;
+      cursor: pointer;
     }
 
     .hero {
@@ -207,6 +237,11 @@
       resize: vertical;
     }
 
+    .order-panel button {
+      width: 100%;
+      margin-top: 10px;
+    }
+
     .summary {
       margin: 18px 0;
       padding-top: 12px;
@@ -268,14 +303,22 @@
         <button class="cta-button" type="button" onclick="document.getElementById('order-panel').scrollIntoView({behavior:'smooth'});">Quick Order</button>
       </div>
     </div>
+    <nav class="main-nav" aria-label="Primary">
+      <a href="https://completedentalsupplies.com" target="_blank" rel="noreferrer">Home</a>
+      <a href="https://completedentalsupplies.com/pages/contact-us" target="_blank" rel="noreferrer">Contact</a>
+      <a href="https://completedentalsupplies.com/collections/disposables" target="_blank" rel="noreferrer">Disposables</a>
+      <a href="https://completedentalsupplies.com/collections/laboratory" target="_blank" rel="noreferrer">Laboratory</a>
+      <a href="https://completedentalsupplies.com/collections/implants" target="_blank" rel="noreferrer">Implants</a>
+      <a href="https://completedentalsupplies.com/collections/catalog" target="_blank" rel="noreferrer">Catalog</a>
+    </nav>
   </header>
 
   <section class="hero">
     <h1>Disposable Supply Order Form</h1>
     <p>
-      Thanks for scanning the QR code! Select the quantities you need below. When you click
-      “Send Order,” your order details will be emailed to Complete Dental Supplies for fast
-      processing.
+      Thanks for scanning the QR code! Select the quantities you need below from the
+      disposables collection. When you click “Send Order,” your order details will be emailed
+      to Complete Dental Supplies for fast processing.
     </p>
   </section>
 
@@ -308,7 +351,11 @@
       </div>
 
       <button class="cta-button" type="button" id="send-order">Send Order Email</button>
-      <p class="note">This will open your email client with the order details ready to send.</p>
+      <button class="secondary-button" type="button" id="reset-order">Clear Quantities</button>
+      <p class="note">
+        This will open your email client with the order details ready to send. Orders go to
+        orders@completedentalsupplies.com by default.
+      </p>
     </aside>
   </main>
 
@@ -317,6 +364,7 @@
   </footer>
 
   <script>
+    const ORDER_EMAIL = "orders@completedentalsupplies.com";
     const products = [
       { name: "Aurelia Vibrant Latex Exam Gloves", detail: "Box of 100" },
       { name: "Nitrile Exam Gloves (Powder-Free)", detail: "Box of 100" },
@@ -348,6 +396,7 @@
     const summaryEl = document.getElementById("order-summary");
 
     const quantities = new Map();
+    const inputs = [];
 
     const updateSummary = () => {
       const selected = [...quantities.entries()].filter(([_, qty]) => qty > 0);
@@ -361,15 +410,22 @@
       summaryEl.innerHTML = `<strong>Order Summary</strong><br />${lines}`;
     };
 
+    const slugify = (value) =>
+      value
+        .toLowerCase()
+        .replace(/[^a-z0-9]+/g, "-")
+        .replace(/(^-|-$)/g, "");
+
     products.forEach((product) => {
+      const slug = slugify(product.name);
       const card = document.createElement("div");
       card.className = "product-card";
       card.innerHTML = `
         <h3>${product.name}</h3>
         <div class="product-meta">${product.detail}</div>
         <div class="qty-control">
-          <label for="qty-${product.name}" class="product-meta">Qty</label>
-          <input id="qty-${product.name}" type="number" min="0" value="0" />
+          <label for="qty-${slug}" class="product-meta">Qty</label>
+          <input id="qty-${slug}" type="number" min="0" value="0" />
         </div>
       `;
       const input = card.querySelector("input");
@@ -378,6 +434,7 @@
         quantities.set(product.name, value);
         updateSummary();
       });
+      inputs.push(input);
       productGrid.appendChild(card);
     });
 
@@ -410,7 +467,15 @@
 
       const body = encodeURIComponent(lines.join("\n"));
       const subject = encodeURIComponent("Disposable Order Request");
-      window.location.href = `mailto:orders@completedentalsupplies.com?subject=${subject}&body=${body}`;
+      window.location.href = `mailto:${ORDER_EMAIL}?subject=${subject}&body=${body}`;
+    });
+
+    document.getElementById("reset-order").addEventListener("click", () => {
+      quantities.clear();
+      inputs.forEach((input) => {
+        input.value = 0;
+      });
+      updateSummary();
     });
   </script>
 </body>
